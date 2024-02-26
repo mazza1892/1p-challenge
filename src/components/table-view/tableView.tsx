@@ -3,9 +3,9 @@ import '../../interfaces/table.interface.ts';
 
 function TableView(props: any) {
     return (
-        <div>
-            <h1>Plan</h1>
-            <table>
+        <div className="mt-5">
+            <h2 className="text-4xl">Plan</h2>
+            <table className="w-full">
                 <thead>
                     <tr>
                         <th>Day</th>

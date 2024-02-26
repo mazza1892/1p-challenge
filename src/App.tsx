@@ -23,7 +23,6 @@ function App() {
     return (
         <>
           <h1>1p Challenge</h1>
-          <div className="card">
               <label htmlFor={"currency"}>Currency: </label>
               <select name={"currency"} onChange={(e) => setCurrency(e.target.value)}>
                   <option value={"£"}>£ (GBP)</option>
@@ -41,7 +40,6 @@ function App() {
               </div>
 
               <TableView data={CalendarService.tableData} currency={currency} />
-          </div>
         </>
   )
 }
