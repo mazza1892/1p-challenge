@@ -20,8 +20,8 @@ function TableView(props: any) {
                             return <tr key={item.day} className="bg-gray-600 text-white">
                                 <td className="border px-4 py-2 w-1/2">Day {item.day}</td>
                                 <td className="border px-4 py-2 w-1/2">{item.month}</td>
-                                <td className="border px-4 py-2 w-1/2">{props.currency}{item.day / 100}</td>
-                                <td className="border px-4 py-2 w-1/2">{props.currency}{item.runningTotal / 100}</td>
+                                <td className="border px-4 py-2 w-1/2">{props.currency}{item.amount}</td>
+                                <td className="border px-4 py-2 w-1/2">{props.currency}{item.runningTotal}</td>
                             </tr>;
                         })}
                     </tbody>

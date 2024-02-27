@@ -45,6 +45,7 @@ export class CalendarService {
         for(let i = 1; i <= totalNumberOfDays; i++) {
             this.daysArray.push(i);
         }
+
     }
 
 
@@ -71,6 +72,17 @@ export class CalendarService {
     }
 
     /**
+     * Converts the amount to the selected currency
+     * @param amount
+     * @param divisor
+     * @returns {number}
+     */
+    convertToCurrency(amount: number, divisor: number): number{
+        const currency = amount / divisor;
+        return parseInt(currency.toFixed(2))
+    }
+
+    /**
      * Populates the data array
      * @param {Date} startDate
      * @returns {TableInterface[]}
@@ -79,18 +91,24 @@ export class CalendarService {
         let data: TableInterface[] = [];
         let runningTotal = 0;
         this.daysArray.forEach((day) => {
-            runningTotal = runningTotal + day;
+            let amount = day / 100;
+            runningTotal = runningTotal + amount;
             data.push({
                 day: day,
                 month: "January",
-                amount: day,
-                runningTotal: runningTotal
+                // @ts-ignore
+                amount: amount.toFixed(2),
+                // @ts-ignore
+                runningTotal: runningTotal.toFixed(2),
             });
         })
+
 
         this.tableData = data;
         return data;
     }
+
+
 
 }
 
