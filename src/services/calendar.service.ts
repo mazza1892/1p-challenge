@@ -82,6 +82,30 @@ export class CalendarService {
         return parseInt(currency.toFixed(2))
     }
 
+
+    /**
+     * Calculates the date
+     * @param startDate
+     * @param currentDay
+     * @returns {Date}
+     */
+    public static calculateDate(startDate: Date, currentDay: number ): Date {
+        let targetDate = new Date(startDate);
+
+        if(currentDay !== 1) {
+            targetDate.setDate(startDate.getDate() + (currentDay-1));
+        }
+
+        return targetDate;
+    }
+
+    /**
+     * Empties data array
+     */
+    public static clearPopulatedData(): void {
+        this.tableData = [];
+    }
+
     /**
      * Populates the data array
      * @param {Date} startDate
@@ -90,12 +114,15 @@ export class CalendarService {
     public static populateData(startDate: Date): TableInterface[] {
         let data: TableInterface[] = [];
         let runningTotal = 0;
+
         this.daysArray.forEach((day) => {
+            let date = this.calculateDate(startDate, day);
             let amount = day / 100;
             runningTotal = runningTotal + amount;
+
             data.push({
                 day: day,
-                month: "January",
+                date: date,
                 // @ts-ignore
                 amount: amount.toFixed(2),
                 // @ts-ignore
