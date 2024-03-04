@@ -1,7 +1,20 @@
 import './tableView.css';
 import '../../interfaces/table.interface.ts';
+import {useEffect, useState} from "react";
+import {CalendarService} from "../../services/calendar.service.ts";
 
 function TableView(props: any) {
+    const tableData = CalendarService.tableData;
+    const [tableState, setTableState] = useState(tableData);
+
+    useEffect(() => {
+       // props.updataTableData(tableData);
+        setTableState(tableData)
+        console.log('tableState', tableState);
+    }, [tableData]);
+
+
+
     return (
         <div className="h-96 overflow-y-scroll mt-5">
             <div className="w-full">
@@ -16,10 +29,11 @@ function TableView(props: any) {
                     </thead>
 
                     <tbody>
-                        {props.data.map(function (item: any) {
+                        {tableState.map(function (item: any) {
+                            const dateConf = {day:'numeric', month:'long', year:'numeric'}
                             return <tr key={item.day} className="bg-gray-600 text-white">
                                 <td className="border px-4 py-2 w-1/2">Day {item.day}</td>
-                                <td className="border px-4 py-2 w-1/2">{item.month}</td>
+                                <td className="border px-4 py-2 w-1/2">{item.date.toLocaleString('default', dateConf)}</td>
                                 <td className="border px-4 py-2 w-1/2">{props.currency}{item.amount}</td>
                                 <td className="border px-4 py-2 w-1/2">{props.currency}{item.runningTotal}</td>
                             </tr>;

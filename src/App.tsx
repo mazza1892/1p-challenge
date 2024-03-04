@@ -1,23 +1,50 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import './App.css'
 import {CalendarService} from "./services/calendar.service.ts";
 import TableView from "./components/table-view/tableView.tsx";
 
 function App() {
-    const [startDate, setStartDate] = useState(new Date());
+    const startOfYear = new Date().getFullYear();
+    const [startDate, setStartDate] = useState(`${startOfYear}-1-1`);
     const [isLeapYear, setIsLeapYear] = useState(false);
     const [currency, setCurrency] = useState('£');
+    // @ts-ignore
+    const [tableState, setTableState] = useState([]);
 
     /**
-     * Configures the app based on the start date
-     * @param {string} value
-     */
-    function configureApp(value: string) {
-        const year = parseInt(value.slice(0,4));
+     * Runs the basic configuration
+     * */
+    function runConfig(): void {
+        CalendarService.clearPopulatedData();
+        const year = parseInt(startDate.slice(0,4));
         CalendarService.initDaysOfTheYearObject(year);
-        setStartDate(new Date(value));
         setIsLeapYear(CalendarService.isLeapYear(year));
-        CalendarService.populateData(startDate);
+        CalendarService.populateData(new Date(startDate));
+    }
+
+    /**
+     * Updates the state
+     * @param e
+     */
+    function updateState(e: any) {
+        setStartDate(e.target.value);
+    }
+
+    /**
+     * Runs the configuration on start
+     */
+    useEffect(() => {
+        runConfig();
+        updateTableData(CalendarService.tableData);
+    }, [startDate]);
+
+
+    /**
+     * Updates the table data
+     * @param data
+     */
+    function updateTableData(data: any) {
+        setTableState(data);
     }
 
     return (
@@ -31,15 +58,15 @@ function App() {
               </select>
                 <br />
               <label htmlFor={"startDate"}>Start: </label>
-              <input name={"startDate"} type={"date"} onChange={(e) => configureApp((e.target.value))} />
+              <input name={"startDate"} type={"date"} onChange={(e) => updateState(e)} />
 
               <div>
-                  <p>Date: {startDate.toDateString()}</p>
+                  <p>Date: {new Date(startDate).toDateString()}</p>
                   <p>Leap Year: {isLeapYear.toString()}</p>
                   <p>Total: {`${currency}${CalendarService.getTotalProjectedSavings()}`}</p>
               </div>
 
-              <TableView data={CalendarService.tableData} currency={currency} />
+              <TableView data={CalendarService.tableData} currency={currency} updateTableData={updateTableData} />
         </>
   )
 }

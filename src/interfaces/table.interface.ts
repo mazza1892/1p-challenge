@@ -1,6 +1,6 @@
 export interface TableInterface {
     day: number;
-    month: string;
+    date: Date;
     amount: number;
     runningTotal: number;
 }
