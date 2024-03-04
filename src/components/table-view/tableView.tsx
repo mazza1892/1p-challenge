@@ -1,19 +1,15 @@
-import './tableView.css';
-import '../../interfaces/table.interface.ts';
-import {useEffect, useState} from "react";
-import {CalendarService} from "../../services/calendar.service.ts";
+import './tableView.css'
+import '../../interfaces/table.interface.ts'
+import { useEffect, useState } from 'react'
+import { CalendarService } from '../../services/calendar.service.ts'
 
 function TableView(props: any) {
-    const tableData = CalendarService.tableData;
-    const [tableState, setTableState] = useState(tableData);
+    const tableData = CalendarService.tableData
+    const [tableState, setTableState] = useState(tableData)
 
     useEffect(() => {
-       // props.updataTableData(tableData);
         setTableState(tableData)
-        console.log('tableState', tableState);
-    }, [tableData]);
-
-
+    }, [tableData])
 
     return (
         <div className="h-96 overflow-y-scroll mt-5">
@@ -30,13 +26,34 @@ function TableView(props: any) {
 
                     <tbody>
                         {tableState.map(function (item: any) {
-                            const dateConf = {day:'numeric', month:'long', year:'numeric'}
-                            return <tr key={item.day} className="bg-gray-600 text-white">
-                                <td className="border px-4 py-2 w-1/2">Day {item.day}</td>
-                                <td className="border px-4 py-2 w-1/2">{item.date.toLocaleString('default', dateConf)}</td>
-                                <td className="border px-4 py-2 w-1/2">{props.currency}{item.amount}</td>
-                                <td className="border px-4 py-2 w-1/2">{props.currency}{item.runningTotal}</td>
-                            </tr>;
+                            const dateConf = {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                            }
+                            return (
+                                <tr
+                                    key={item.day}
+                                    className="bg-gray-600 text-white">
+                                    <td className="border px-4 py-2 w-1/2">
+                                        Day {item.day}
+                                    </td>
+                                    <td className="border px-4 py-2 w-1/2">
+                                        {item.date.toLocaleString(
+                                            'default',
+                                            dateConf
+                                        )}
+                                    </td>
+                                    <td className="border px-4 py-2 w-1/2">
+                                        {props.currency}
+                                        {item.amount}
+                                    </td>
+                                    <td className="border px-4 py-2 w-1/2">
+                                        {props.currency}
+                                        {item.runningTotal}
+                                    </td>
+                                </tr>
+                            )
                         })}
                     </tbody>
                 </table>
@@ -45,4 +62,4 @@ function TableView(props: any) {
     )
 }
 
-export default TableView;
+export default TableView

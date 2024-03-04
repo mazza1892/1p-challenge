@@ -1,0 +1,30 @@
+name: Post-commit Checks
+
+on: [push]
+
+jobs:
+    Prettier:
+        name: Prettier
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: '.'
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v3
+            - name: Use Node.js v18
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+            - name: Install prettier
+              run: npm install --save-dev --save-exact prettier
+            - name: Install estlint-prettier config
+              run: |
+                  npm install --save-dev eslint-config-prettier
+            - name: Run prettier
+              run: npx prettier --check .
+            - name: Cleanup
+              if: ${{ always() }}
+              run: |
+                  rm -rf *
+                  rm -rf .[^.] .??*
