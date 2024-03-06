@@ -1,0 +1,21 @@
+{
+    "root": true,
+    "extends": [
+        "airbnb",
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked"
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "comma-dangle": "off",
+        "@typescript-eslint/comma-dangle": "off",
+        // Indent with 4 spaces
+        "indent": [2, 4],
+        "@typescript-eslint/indent": [2, 4],
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4]
+    }
+}
