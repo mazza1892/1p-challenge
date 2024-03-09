@@ -59,17 +59,6 @@ export default class CalendarService {
     }
 
     /**
-     * Returns the number of days in a month
-     * @param date
-     * @returns {number}
-     */
-    public static getNumberOfDaysInMonth(date: Date): number {
-        const month = date.getMonth();
-        const year = date.getFullYear();
-        return new Date(year, month + 1, 0).getDate();
-    }
-
-    /**
      * Converts the amount to the selected currency
      * @param amount
      * @param divisor
@@ -127,5 +116,49 @@ export default class CalendarService {
 
         this.tableData = data;
         return data;
+    }
+
+    /**
+     * Sorts the table data and returns the last occurrence of each month
+     * @param data
+     * @returns {TableInterface[]} returns the sorted array
+     */
+    public static sortTableData(data: TableInterface[]): TableInterface[] {
+        const monthsSequence: [number, number][] = [];
+        const months: TableInterface[] = [];
+        const result: TableInterface[] = [];
+
+        const firstDate = {
+            day: data[0].date.getDate(),
+            month: data[0].date.getMonth(),
+            year: data[0].date.getFullYear(),
+        };
+
+        const counter = firstDate.day === 1 ? 12 : 13;
+
+        for (let i = 0; i < counter; i += 1) {
+            if (firstDate.month === 12) {
+                firstDate.month = 0;
+                firstDate.year += 1;
+            }
+
+            monthsSequence.push([firstDate.month, firstDate.year]);
+            firstDate.month += 1;
+        }
+
+        monthsSequence.forEach((date) => {
+            data.forEach((item) => {
+                const itemMonth = item.date.getMonth();
+                const itemYear = item.date.getFullYear();
+
+                if (itemMonth === date[0] && itemYear === date[1]) {
+                    months.push(item);
+                }
+            });
+
+            result.push(months[months.length - 1]);
+        });
+
+        return result;
     }
 }

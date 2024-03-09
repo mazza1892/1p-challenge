@@ -4,12 +4,16 @@ import CalendarService from './services/calendar.service';
 import TableView from './components/table-view/tableView';
 import { TableInterface } from './interfaces/table.interface';
 
-function App() {
+/**
+ * Main App component
+ * @return {JSX.Element}
+ */
+function App(): JSX.Element {
     const startOfYear = new Date().getFullYear();
     const [startDate, setStartDate] = useState(`${startOfYear}-1-1`);
     const [isLeapYear, setIsLeapYear] = useState(false);
     const [currency, setCurrency] = useState('£');
-
+    const [view, setView] = useState('daily');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [tableState, setTableState] = useState([]);
 
@@ -64,6 +68,15 @@ function App() {
             </label>
             <br />
 
+            <label htmlFor="view">
+                View: &nbsp;
+                <select name="view" onChange={(e) => setView(e.target.value)}>
+                    <option value="daily">Daily</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </label>
+            <br />
+
             <label htmlFor="startDate">
                 Start: &nbsp;
                 <input
@@ -86,8 +99,9 @@ function App() {
                     {`${currency}${CalendarService.getTotalProjectedSavings()}`}
                 </p>
             </div>
+            <br />
 
-            <TableView data={CalendarService.tableData} currency={currency} />
+            <TableView currency={currency} view={view} />
         </>
     );
 }
