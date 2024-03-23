@@ -14,6 +14,7 @@ function App(): JSX.Element {
     const [isLeapYear, setIsLeapYear] = useState(false);
     const [currency, setCurrency] = useState('£');
     const [view, setView] = useState('daily');
+    const [customAmount, setCustomAmount] = useState(1);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [tableState, setTableState] = useState([]);
 
@@ -23,7 +24,7 @@ function App(): JSX.Element {
     function runConfig(): void {
         CalendarService.clearPopulatedData();
         const year = parseInt(startDate.slice(0, 4), 10);
-        CalendarService.initDaysOfTheYearObject(year);
+        CalendarService.initDaysOfTheYearObject(year, customAmount);
         setIsLeapYear(CalendarService.isLeapYear(year));
         CalendarService.populateData(new Date(startDate));
     }
@@ -50,7 +51,7 @@ function App(): JSX.Element {
     useEffect(() => {
         runConfig();
         updateTableData(CalendarService.tableData);
-    }, [startDate]);
+    }, [startDate, customAmount]);
 
     return (
         <>
@@ -83,6 +84,19 @@ function App(): JSX.Element {
                     name="startDate"
                     type="date"
                     onChange={(e) => updateState(e)}
+                />
+            </label>
+            <br />
+
+            <label htmlFor="customAmount">
+                Custom Amount: &nbsp;
+                <input
+                    type="number"
+                    min="1"
+                    value={customAmount}
+                    onChange={(e) => {
+                        setCustomAmount(parseInt(e.target.value, 10));
+                    }}
                 />
             </label>
             <div>

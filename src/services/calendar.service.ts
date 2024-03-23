@@ -33,17 +33,28 @@ export default class CalendarService {
     /**
      * Initializes the days of the year object
      * @param year
+     * @param value The amount to save each day
      */
-    public static initDaysOfTheYearObject(year: number): void {
+    public static initDaysOfTheYearObject(year: number, value: number): void {
         let totalNumberOfDays = 365;
+        let totalAmount = 0;
         this.daysArray = [];
+        let amount = value;
 
+        // Check if the year is a leap year
         if (CalendarService.isLeapYear(year)) {
             totalNumberOfDays = 366;
         }
 
+        // Guard in case user leaves the input empty
+        if (value < 1 || !value) {
+            amount = 1;
+        }
+
+        // Populate the days array
         for (let i = 1; i <= totalNumberOfDays; i += 1) {
-            this.daysArray.push(i);
+            totalAmount += amount;
+            this.daysArray.push(totalAmount);
         }
     }
 
@@ -101,9 +112,10 @@ export default class CalendarService {
         const data: TableInterface[] = [];
         let runningTotal = 0;
 
-        this.daysArray.forEach((day) => {
+        this.daysArray.forEach((value) => {
+            const day = this.daysArray.indexOf(value) + 1;
             const date = this.calculateDate(startDate, day);
-            const amount = Math.round((day / 100) * 1e2) / 1e2;
+            const amount = Math.round((value / 100) * 1e2) / 1e2;
             runningTotal += amount;
 
             data.push({
@@ -125,7 +137,7 @@ export default class CalendarService {
      */
     public static sortTableData(data: TableInterface[]): TableInterface[] {
         const monthsSequence: [number, number][] = [];
-        const months: TableInterface[] = [];
+        let months: TableInterface[] = [];
         const result: TableInterface[] = [];
 
         const firstDate = {
@@ -136,6 +148,10 @@ export default class CalendarService {
 
         const counter = firstDate.day === 1 ? 12 : 13;
 
+        /**
+         *  Create a sequence of months based on the start date,
+         *  particularly important if spanning multiple years
+         */
         for (let i = 0; i < counter; i += 1) {
             if (firstDate.month === 12) {
                 firstDate.month = 0;
@@ -148,15 +164,18 @@ export default class CalendarService {
 
         monthsSequence.forEach((date) => {
             data.forEach((item) => {
-                const itemMonth = item.date.getMonth();
-                const itemYear = item.date.getFullYear();
+                const current = {
+                    month: item.date.getMonth(),
+                    year: item.date.getFullYear(),
+                };
 
-                if (itemMonth === date[0] && itemYear === date[1]) {
+                if (current.month === date[0] && current.year === date[1]) {
                     months.push(item);
                 }
             });
 
-            result.push(months[months.length - 1]);
+            result.push(months[months.length - 1]); // Push the last occurrence of the month
+            months = []; // Reset the array to contain only a single month
         });
 
         return result;
