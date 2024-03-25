@@ -1,3 +1,4 @@
+// @ts-expect-error - import react based on eslint rules
 import React from 'react';
 import './tableView.css';
 import CalendarService from '../../services/calendar.service';

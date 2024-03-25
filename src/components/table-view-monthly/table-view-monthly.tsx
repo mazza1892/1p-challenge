@@ -1,3 +1,4 @@
+// @ts-expect-error - import react based on eslint rules
 import React, { useEffect, useState } from 'react';
 import '../table-view/tableView.css';
 import CalendarService from '../../services/calendar.service';
@@ -31,7 +32,9 @@ function TableViewMonthly(props: { currency: string }): JSX.Element {
         const previousItem: TableInterface = monthlyData[previousIndex];
 
         if (previousItem) {
-            const monthlyAmount = item.runningTotal - previousItem.runningTotal;
+            // eslint-disable-next-line operator-linebreak
+            const monthlyAmount: number =
+                item.runningTotal - previousItem.runningTotal;
             return monthlyAmount.toFixed(2);
         }
 
