@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import CalendarService from './services/calendar.service';
+import Header from './components/header';
 import TableView from './components/table-view/tableView';
 import { TableInterface } from './interfaces/table.interface';
 
@@ -42,6 +43,7 @@ function App(): JSX.Element {
      * @param {TableInterface[]} data
      */
     function updateTableData(data: TableInterface[]) {
+        // @ts-expect-error - data is not assignable to type
         setTableState(data);
     }
 
@@ -55,7 +57,7 @@ function App(): JSX.Element {
 
     return (
         <>
-            <h1>1p Challenge</h1>
+            <Header />
             <label htmlFor="currency">
                 Currency: &nbsp;
                 <select
