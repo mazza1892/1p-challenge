@@ -4,11 +4,14 @@ import CalendarService from './services/calendar.service';
 import Header from './components/header';
 import TableView from './components/table-view/tableView';
 import { TableInterface } from './interfaces/table.interface';
+import DownloadCsvButton from './components/download-csv-button';
+import DownloadExcelButton from './components/download-excel-button';
 
 /**
  * Main App component
  * @return {JSX.Element}
  */
+
 function App(): JSX.Element {
     const startOfYear = new Date().getFullYear();
     const [startDate, setStartDate] = useState(`${startOfYear}-1-1`);
@@ -117,6 +120,21 @@ function App(): JSX.Element {
             </div>
             <br />
 
+            <DownloadCsvButton
+                data={tableState}
+                currency={currency}
+                year={startOfYear}
+                view={view}
+                startDate={startDate}
+            />
+
+            <DownloadExcelButton
+                data={tableState}
+                currency={currency}
+                year={startOfYear}
+                view={view}
+                startDate={startDate}
+            />
             <TableView currency={currency} view={view} />
         </>
     );
