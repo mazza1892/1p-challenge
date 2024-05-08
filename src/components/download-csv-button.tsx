@@ -1,4 +1,3 @@
-import React from 'react';
 import CalendarService from '../services/calendar.service';
 import { TableInterface } from '../interfaces/table.interface';
 

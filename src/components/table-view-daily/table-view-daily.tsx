@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../table-view/tableView.css';
 import CalendarService from '../../services/calendar.service';
 import { TableInterface } from '../../interfaces/table.interface';

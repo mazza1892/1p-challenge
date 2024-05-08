@@ -1,5 +1,4 @@
 import * as XLSX from 'xlsx';
-import React from 'react';
 
 import CalendarService from '../services/calendar.service';
 import { TableInterface } from '../interfaces/table.interface';
@@ -9,7 +8,10 @@ import { TableInterface } from '../interfaces/table.interface';
  * @param data
  * @param currency
  */
-function processData(data: TableInterface, currency: string): TableInterface[] {
+function processData(
+    data: TableInterface[],
+    currency: string
+): TableInterface[] {
     // eslint-disable-next-line  max-len
     // eslint-disable-next-line  @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
     return data.map((item: TableInterface) => ({
