@@ -35,9 +35,9 @@ function App(): JSX.Element {
 
     /**
      * Updates the state based on the selected start date
-     * @param {React.ChangeEvent<HTMLSelectElement>} event
+     * @param {React.ChangeEvent<HTMLInputElement>} event
      */
-    function updateState(event: React.ChangeEvent<HTMLSelectElement>) {
+    function updateState(event: React.ChangeEvent<HTMLInputElement>) {
         setStartDate(event.target.value);
     }
 
@@ -123,7 +123,7 @@ function App(): JSX.Element {
             <DownloadCsvButton
                 data={tableState}
                 currency={currency}
-                year={startOfYear}
+                //year={startOfYear}
                 view={view}
                 startDate={startDate}
             />
@@ -131,7 +131,7 @@ function App(): JSX.Element {
             <DownloadExcelButton
                 data={tableState}
                 currency={currency}
-                year={startOfYear}
+                //year={startOfYear}
                 view={view}
                 startDate={startDate}
             />

@@ -27,14 +27,16 @@ function TableViewMonthly(props: { currency: string }): JSX.Element {
      * @returns {string}
      */
     function displayMonthlyTotal(item: TableInterface): string {
-        const monthlyData = CalendarService.sortTableData(tableState);
+        const monthlyData: TableInterface[] =
+            CalendarService.sortTableData(tableState);
         const previousIndex: number = monthlyData.indexOf(item) - 1;
         const previousItem: TableInterface = monthlyData[previousIndex];
 
         if (previousItem) {
             // eslint-disable-next-line operator-linebreak
             const monthlyAmount: number =
-                item.runningTotal - previousItem.runningTotal;
+                Number.parseFloat(item.runningTotal) -
+                Number.parseFloat(previousItem.runningTotal);
             return monthlyAmount.toFixed(2);
         }
 
