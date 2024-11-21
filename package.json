@@ -30,7 +30,7 @@
   "homepage": "https://github.com/mazza1892/1p-challenge#readme",
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
